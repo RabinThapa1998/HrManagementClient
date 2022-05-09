@@ -7,7 +7,10 @@ import SalaryCard from "../../components/dashboard/SalaryCard";
 
 export const Dashboard = () => {
   return (
-    <div className="w-full px-10 py-5">
+    <div className="w-full px-10 py-5 relative">
+      <h2 className="text-2xl font-semibold text-sidebar absolute top-5">
+        Dashboard
+      </h2>
       <div className="flex justify-end mb-8">
         <DashboardNavProfileCard />
       </div>

@@ -1,41 +1,53 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { MenuSvg } from "./svgs/Svgs";
 
 const Sidebar = () => {
+  let params = useParams();
+  console.log("params", params);
+
   const [shrink, setShrink] = useState(false);
   const handleClick = () => {
     setShrink((prev) => !prev);
     console.log(shrink);
   };
 
+  let activeStyle = {
+    backgroundColor: "#55b060",
+  };
+
   return (
     <div
-      className={`" text-white shadow-md h-screen  py-6 sticky top-0 overflow-hidden " ${
-        shrink ? "w-20 bg-sidebar px-2" : "w-60 bg-sidebar px-5"
+      className={`" text-white shadow-md h-screen  py-6 sticky top-0 overflow-hidden transition-all duration-150 " ${
+        shrink
+          ? "w-20 bg-sidebar px-2 flex-shrink-0"
+          : "w-60 bg-sidebar px-5 flex-shrink-0"
       } `}
     >
       <button
         onClick={handleClick}
         className={`${
           shrink
-            ? "mb-20 flex justify-center w-full "
+            ? "mb-4 flex justify-center w-full "
             : "mb-4 flex justify-end w-full "
         }`}
       >
         <MenuSvg />
       </button>
-      {!shrink && (
-        <h2 className="text-4xl font-extrabold text-center mb-8 ">HR Mgmt</h2>
-      )}
+      <div className="h-24 pt-4">
+        {!shrink && (
+          <h2 className="text-4xl font-extrabold text-center mb-8 ">HR Mgmt</h2>
+        )}
+      </div>
       <div className="flex-col flex w-full">
-        <Link
+        <NavLink
           to="/"
           className={` ${
             shrink
               ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
               : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
           }`}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <img
             src="/dashboard.png"
@@ -47,14 +59,15 @@ const Sidebar = () => {
               Dashboard
             </p>
           )}
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/profile"
           className={` ${
             shrink
               ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
               : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
           }`}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <img
             src="/profile.png"
@@ -66,7 +79,7 @@ const Sidebar = () => {
               Profile
             </p>
           )}
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
