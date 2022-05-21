@@ -10,6 +10,7 @@ const EmployeeDetailsPage = () => {
   let params = useParams();
   const navigate = useNavigate();
   const urlUserId = params.userId;
+  console.log("urlUserId", urlUserId);
 
   const URL = import.meta.env.VITE_URL;
   const tokenReceived = Cookies.get("token");
@@ -23,21 +24,33 @@ const EmployeeDetailsPage = () => {
   });
   useEffect(() => {
     axiosFetchInstance
-      .get(`/admins/employees/${urlUserId}`)
+      .get(`/admins/employees/${params.userId}`)
       .then((res) => setFetchdata(res.data.data))
       .catch((err) => console.log(err));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(fetchdata);
     var formData = new FormData();
-    Object.entries(fetchdata).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    formData.append("email", fetchdata.email);
+    formData.append("firstName", fetchdata.firstName);
+    formData.append("lastName", fetchdata.lastName);
+    formData.append("phone", fetchdata.phone);
+    formData.append("address", fetchdata.address);
+    formData.append("dob", fetchdata.dob);
+    formData.append("citizenship", fetchdata.citizenship);
+    formData.append("cv", fetchdata.cv);
+    formData.append("image", fetchdata.image);
     axiosFetchInstance
-      .put(`/admins/employees/${urlUserId}`, formData)
-      .then((res) => alert("Successfully Updated"))
-      .catch((err) => alert("Error ,retry!"));
+      .put(`/admins/employees/${params.userId}`, formData)
+      .then((res) => {
+        alert("Successfully Updated");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error ,retry!");
+      });
   };
   if (!fetchdata) {
     return <div>Loading.....</div>;
@@ -68,7 +81,7 @@ const EmployeeDetailsPage = () => {
             </div>
             <div className="grid grid-cols-2 capitalize gap-5">
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="firstname" className="">
+                <label htmlFor="firstname" className="">
                   First name:
                 </label>
                 <input
@@ -80,7 +93,7 @@ const EmployeeDetailsPage = () => {
                 />
               </div>
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="lastname" className="">
+                <label htmlFor="lastname" className="">
                   Last name:
                 </label>
                 <input
@@ -92,7 +105,7 @@ const EmployeeDetailsPage = () => {
                 />
               </div>
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="dob" className="">
+                <label htmlFor="dob" className="">
                   Date Of Birth:
                 </label>
                 <input
@@ -105,7 +118,7 @@ const EmployeeDetailsPage = () => {
                 />
               </div>
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="address" className="">
+                <label htmlFor="address" className="">
                   address:
                 </label>
                 <input
@@ -118,7 +131,7 @@ const EmployeeDetailsPage = () => {
                 />
               </div>
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="email" className="">
+                <label htmlFor="email" className="">
                   email:
                 </label>
                 <input
@@ -132,7 +145,7 @@ const EmployeeDetailsPage = () => {
               </div>
 
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="phone" className="">
+                <label htmlFor="phone" className="">
                   Phone Number:
                 </label>
                 <input
@@ -145,7 +158,7 @@ const EmployeeDetailsPage = () => {
                 />
               </div>
               {/* <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="joinDate" className="">
+                <label htmlFor="joinDate" className="">
                   Date of Join:
                 </label>
                 <input
@@ -159,26 +172,49 @@ const EmployeeDetailsPage = () => {
                 />
               </div> */}
             </div>
-            <div className="flex mt-6 flex-col">
+            <div className=" mt-6 ">
               <h3 className="text-2xl capitalize font-medium">documents</h3>
-              <div className=" rounded-md grid grid-cols-3 gap-2">
-                {fetchdata.documents.map((each) => {
+              <div className="flex flex-col">
+                {fetchdata.documents.map((each, key) => {
                   return (
-                    <div className="border p-4 rounded">
+                    <div className="border p-4 rounded w-1/2" key={key}>
                       <p className="font-medium">{each.documentType}</p>
-                      <input
-                        type="file"
-                        onChange={(e) =>
-                          setFetchdata({
-                            ...fetchdata,
-                            [each.documentType]: e.target.files[0],
-                          })
-                        }
-                      />
                       <img src={each.filename} alt="img" />
                     </div>
                   );
                 })}
+              </div>
+              <div className="flex-col flex">
+                <div className="my-10">
+                  <label htmlFor="citizenship" className="text-lg font-bold">
+                    Change citizenship
+                  </label>
+                  <input
+                    type="file"
+                    id="citizenship"
+                    onChange={(e) =>
+                      setFetchdata({
+                        ...fetchdata,
+                        citizenship: e.target.files[0],
+                      })
+                    }
+                  />
+                </div>
+                <div className="my-10">
+                  <label htmlFor="cv" className="text-lg font-bold">
+                    Change cv
+                  </label>
+                  <input
+                    type="file"
+                    id="cv"
+                    onChange={(e) =>
+                      setFetchdata({
+                        ...fetchdata,
+                        cv: e.target.files[0],
+                      })
+                    }
+                  />
+                </div>
               </div>
             </div>
             <div className="flex justify-end my-5">

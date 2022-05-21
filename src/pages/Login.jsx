@@ -52,7 +52,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center my-20 py-6 w-full">
             <label
-              for="username"
+              htmlFor="username"
               className="text-lg font-bold my-2 text-left w-full text-gray-500"
             >
               Username
@@ -68,7 +68,7 @@ const Login = () => {
               }
             />
             <label
-              for="password"
+              htmlFor="password"
               className="text-lg font-bold mb-2 mt-5  text-left w-full text-gray-500"
             >
               Password

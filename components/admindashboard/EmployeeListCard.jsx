@@ -63,8 +63,8 @@ export const IndividualEmployeeCard = ({ employee }) => {
 const EmployeeListCard = ({ allEmployeeDetails }) => {
   return (
     <div className="shadow-sm rounded-md grid grid-cols-4 gap-x-6 gap-y-3 ">
-      {allEmployeeDetails.map((employee) => {
-        return <IndividualEmployeeCard employee={employee} />;
+      {allEmployeeDetails.map((employee, key) => {
+        return <IndividualEmployeeCard employee={employee} key={key} />;
       })}
     </div>
   );

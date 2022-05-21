@@ -67,7 +67,7 @@ const AddNewEmployeePage = () => {
         <form onSubmit={() => handleSubmit(e)} className="mt-4">
           <div className="grid grid-cols-2 capitalize gap-5">
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="profilepic" className="">
+              <label htmlFor="profilepic" className="">
                 Profile pic:
               </label>
               <input
@@ -80,7 +80,7 @@ const AddNewEmployeePage = () => {
             </div>
 
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="firstname" className="">
+              <label htmlFor="firstname" className="">
                 first name:
               </label>
               <input
@@ -93,7 +93,7 @@ const AddNewEmployeePage = () => {
             </div>
 
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="lastname" className="">
+              <label htmlFor="lastname" className="">
                 last name:
               </label>
               <input
@@ -105,7 +105,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="dob" className="">
+              <label htmlFor="dob" className="">
                 Date Of Birth:
               </label>
               <input
@@ -118,7 +118,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="address" className="">
+              <label htmlFor="address" className="">
                 address:
               </label>
               <input
@@ -131,7 +131,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 email:
               </label>
               <input
@@ -144,7 +144,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="password" className="">
+              <label htmlFor="password" className="">
                 password:
               </label>
               <input
@@ -158,7 +158,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="phone" className="">
+              <label htmlFor="phone" className="">
                 Phone Number:
               </label>
               <input
@@ -171,7 +171,7 @@ const AddNewEmployeePage = () => {
               />
             </div>
             {/* <div className="flex flex-col shadow-sm p-2 border rounded">
-              <label for="joinDate" className="">
+              <label htmlFor="joinDate" className="">
                 Date of Join:
               </label>
               <input
@@ -189,7 +189,7 @@ const AddNewEmployeePage = () => {
             <h3 className="text-2xl capitalize font-medium">documents</h3>
             <div className=" rounded-md grid grid-cols-3 gap-2">
               <div className="border p-4 rounded">
-                <label className="font-medium" for="ctz">
+                <label className="font-medium" htmlFor="ctz">
                   Citizenship
                 </label>
                 <input
@@ -210,7 +210,7 @@ const AddNewEmployeePage = () => {
                 />
               </div> */}
               <div className="border  p-4 rounded">
-                <label className="font-medium" for="cv">
+                <label className="font-medium" htmlFor="cv">
                   CV
                 </label>
                 <input
