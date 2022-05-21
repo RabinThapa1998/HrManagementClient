@@ -1,60 +1,44 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
-const data = [
-  {
-    id: 1,
-    name: "Rabin Thapa",
-    position: "Poject Manager",
-    phone: "9862045258",
-    email: "imrabin1998@gmail.com",
-    dob: "1998-12-22",
-    address: "Tinkune, Kathmandu",
-    doj: "1998-12-22",
-  },
-  {
-    id: 2,
-    name: "Suman Khadka",
-    position: "Poject Manager",
-    phone: "9862045258",
-    email: "imrabin1998@gmail.com",
-    dob: "1998-12-22",
-    address: "Tinkune, Kathmandu",
-    doj: "1998-12-22",
-  },
-  {
-    id: 3,
-    name: "Prisma Khatiwada",
-    position: "Poject Manager",
-    phone: "9862045258",
-    email: "imrabin1998@gmail.com",
-    dob: "1998-12-22",
-  },
-  {
-    id: 4,
-    name: "Swesha Singh",
-    position: "Poject Manager",
-    phone: "9862045258",
-    email: "imrabin1998@gmail.com",
-    address: "Tinkune, Kathmandu",
-  },
-  {
-    id: 5,
-    name: "Swesha Singh",
-    position: "Poject Manager",
-    phone: "9862045258",
-    email: "imrabin1998@gmail.com",
-    doj: "1998-12-22",
-  },
-];
 const EmployeeDetailsPage = () => {
   const [fetchdata, setFetchdata] = useState(null);
+  const [image, setImage] = useState(null);
   let params = useParams();
-  console.log(fetchdata);
+  const navigate = useNavigate();
+  const urlUserId = params.userId;
+
+  const URL = import.meta.env.VITE_URL;
+  const tokenReceived = Cookies.get("token");
+
+  const axiosFetchInstance = axios.create({
+    baseURL: URL,
+    headers: {
+      Authorization: "Bearer " + tokenReceived,
+      "Content-Type": "multipart/form-data",
+    },
+  });
   useEffect(() => {
-    const res = data.find((each) => each.id == params.userId);
-    setFetchdata(res);
+    axiosFetchInstance
+      .get(`/admins/employees/${urlUserId}`)
+      .then((res) => setFetchdata(res.data.data))
+      .catch((err) => console.log(err));
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    Object.entries(fetchdata).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    axiosFetchInstance
+      .put(`/admins/employees/${urlUserId}`, formData)
+      .then((res) => alert("Successfully Updated"))
+      .catch((err) => alert("Error ,retry!"));
+  };
   if (!fetchdata) {
     return <div>Loading.....</div>;
   } else {
@@ -63,19 +47,47 @@ const EmployeeDetailsPage = () => {
         <h2 className="text-2xl font-semibold text-sidebar absolute top-5">
           Employee Details
         </h2>
+        <button
+          onClick={() => navigate(-1)}
+          className="top-5 right-10 absolute text-black   rounded-sm px-3 hover:shadow-sm"
+        >
+          <div className="flex">
+            <img src="/backarrow.png" alt="back" className="h-10 w-10" />
+            <p className="text-lg my-auto">Back</p>
+          </div>
+        </button>
         <div className="p-5 mt-9">
           <h3 className="text-2xl capitalize font-medium">Information</h3>
-          <form method="POST">
+          <form method="POST" onSubmit={handleSubmit}>
+            <div className=" h-36 w-36 mx-auto bg-slate-300 rounded-full mb-6">
+              <img
+                src={fetchdata.image}
+                alt="profile_pic"
+                className="h-36 w-36 bg-cover object-cover rounded-full shadow-lg"
+              />
+            </div>
             <div className="grid grid-cols-2 capitalize gap-5">
               <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="fullname" className="">
-                  full name:
+                <label for="firstname" className="">
+                  First name:
                 </label>
                 <input
-                  id="fullname"
-                  value={fetchdata.name}
+                  id="firstname"
+                  value={fetchdata.firstName}
                   onChange={(e) =>
-                    setFetchdata({ ...fetchdata, name: e.target.value })
+                    setFetchdata({ ...fetchdata, firstName: e.target.value })
+                  }
+                />
+              </div>
+              <div className="flex flex-col shadow-sm p-2 border rounded">
+                <label for="lastname" className="">
+                  Last name:
+                </label>
+                <input
+                  id="lastname"
+                  value={fetchdata.lastName}
+                  onChange={(e) =>
+                    setFetchdata({ ...fetchdata, lastName: e.target.value })
                   }
                 />
               </div>
@@ -118,6 +130,7 @@ const EmployeeDetailsPage = () => {
                   }
                 />
               </div>
+
               <div className="flex flex-col shadow-sm p-2 border rounded">
                 <label for="phone" className="">
                   Phone Number:
@@ -131,38 +144,41 @@ const EmployeeDetailsPage = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col shadow-sm p-2 border rounded">
-                <label for="doj" className="">
+              {/* <div className="flex flex-col shadow-sm p-2 border rounded">
+                <label for="joinDate" className="">
                   Date of Join:
                 </label>
                 <input
-                  id="doj"
-                  name="doj"
-                  value={fetchdata.doj}
+                  id="joinDate"
+                  name="joinDate"
+                  type="date"
+                  value={fetchdata.joinDate.split("T")[0]}
                   onChange={(e) =>
-                    setFetchdata({ ...fetchdata, doj: e.target.value })
+                    setFetchdata({ ...fetchdata, joinDate: e.target.value })
                   }
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex mt-6 flex-col">
               <h3 className="text-2xl capitalize font-medium">documents</h3>
               <div className=" rounded-md grid grid-cols-3 gap-2">
-                <div className="border p-4 rounded">
-                  <p className="font-medium">Citizenship</p>
-                  <input type="file" />
-                  <img src="/ctzfront.jpeg" alt="" />
-                </div>
-                <div className="border  p-4 rounded">
-                  <p className="font-medium">PAN</p>
-                  <input type="file" />
-                  <img src="/ctzfront.jpeg" alt="" />
-                </div>
-                <div className="border  p-4 rounded">
-                  <p className="font-medium">Resume</p>
-                  <input type="file" />
-                  <img src="/ctzfront.jpeg" alt="" />
-                </div>
+                {fetchdata.documents.map((each) => {
+                  return (
+                    <div className="border p-4 rounded">
+                      <p className="font-medium">{each.documentType}</p>
+                      <input
+                        type="file"
+                        onChange={(e) =>
+                          setFetchdata({
+                            ...fetchdata,
+                            [each.documentType]: e.target.files[0],
+                          })
+                        }
+                      />
+                      <img src={each.filename} alt="img" />
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="flex justify-end my-5">

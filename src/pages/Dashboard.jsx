@@ -4,6 +4,7 @@ import CalendarCard from "../../components/dashboard/CalendarCard";
 import DashboardNavProfileCard from "../../components/dashboard/DashboardNavProfileCard";
 import LatestNews from "../../components/dashboard/LatestNews";
 import SalaryCard from "../../components/dashboard/SalaryCard";
+import BasicTable from "../../components/tableComp/BasicTable";
 
 export const Dashboard = () => {
   return (
@@ -19,7 +20,8 @@ export const Dashboard = () => {
         <LatestNews />
       </div>
       <SalaryCard />
-      <CalendarCard />
+      {/* <CalendarCard />
+      <BasicTable /> */}
     </div>
   );
 };

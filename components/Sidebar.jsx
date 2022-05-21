@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { MenuSvg } from "./svgs/Svgs";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
   let params = useParams();
   console.log("params", params);
-
+  // const [loginDetails, setLoginDetails] = useState(Cookies.get("roleId"));
+  // const loginDetails = useSelector((state) => state.userlogin.logindetails);
   const [shrink, setShrink] = useState(false);
   const handleClick = () => {
     setShrink((prev) => !prev);
@@ -40,46 +43,102 @@ const Sidebar = () => {
         )}
       </div>
       <div className="flex-col flex w-full">
-        <NavLink
-          to="/"
-          className={` ${
-            shrink
-              ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-              : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
-          }`}
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-        >
-          <img
-            src="/dashboard.png"
-            alt=""
-            className={` ${shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"}"`}
-          />
-          {!shrink && (
-            <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
-              Dashboard
-            </p>
-          )}
-        </NavLink>
-        <NavLink
-          to="/profile"
-          className={` ${
-            shrink
-              ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-              : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
-          }`}
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-        >
-          <img
-            src="/profile.png"
-            alt=""
-            className={` ${shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"}"`}
-          />
-          {!shrink && (
-            <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
-              Profile
-            </p>
-          )}
-        </NavLink>
+        {Cookies.get("roleId") == 2 ? (
+          <>
+            <NavLink
+              to="/"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/dashboard.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Dashboard
+                </p>
+              )}
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/profile.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Profile
+                </p>
+              )}
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink
+              to="/"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/dashboard.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Dashboard
+                </p>
+              )}
+            </NavLink>
+
+            <NavLink
+              to="/addnewemployee"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/profile.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8 w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Add Employee
+                </p>
+              )}
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );
