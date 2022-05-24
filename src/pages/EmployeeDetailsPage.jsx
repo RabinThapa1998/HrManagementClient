@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import SalaryDetailsCard from "../../components/addnewemployee/SalaryDetailsCard";
 
 const EmployeeDetailsPage = () => {
   const [fetchdata, setFetchdata] = useState(null);
@@ -10,7 +11,6 @@ const EmployeeDetailsPage = () => {
   let params = useParams();
   const navigate = useNavigate();
   const urlUserId = params.userId;
-  console.log("urlUserId", urlUserId);
 
   const URL = import.meta.env.VITE_URL;
   const tokenReceived = Cookies.get("token");
@@ -69,7 +69,7 @@ const EmployeeDetailsPage = () => {
             <p className="text-lg my-auto">Back</p>
           </div>
         </button>
-        <div className="p-5 mt-9">
+        <div className="p-5 my-9 border rounded-md relative">
           <h3 className="text-2xl capitalize font-medium">Information</h3>
           <form method="POST" onSubmit={handleSubmit}>
             <div className=" h-36 w-36 mx-auto bg-slate-300 rounded-full mb-6">
@@ -222,11 +222,12 @@ const EmployeeDetailsPage = () => {
                 className="bg-primary rounded px-3 py-2 text-xl text-white  shadow-sm hover:shadow-xl"
                 type="submit"
               >
-                Update
+                Update Information
               </button>
             </div>
           </form>
         </div>
+        <SalaryDetailsCard urlUserId={urlUserId} />
       </div>
     );
   }

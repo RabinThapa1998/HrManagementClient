@@ -49,8 +49,8 @@ const Sidebar = () => {
               to="/"
               className={` ${
                 shrink
-                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
               }`}
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
@@ -71,8 +71,8 @@ const Sidebar = () => {
               to="/profile"
               className={` ${
                 shrink
-                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
               }`}
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
@@ -96,8 +96,8 @@ const Sidebar = () => {
               to="/"
               className={` ${
                 shrink
-                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
               }`}
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
@@ -119,8 +119,8 @@ const Sidebar = () => {
               to="/addnewemployee"
               className={` ${
                 shrink
-                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md"
-                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md"
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
               }`}
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
@@ -134,6 +134,28 @@ const Sidebar = () => {
               {!shrink && (
                 <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
                   Add Employee
+                </p>
+              )}
+            </NavLink>
+            <NavLink
+              to="/salarylist"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/salary.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8  w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Salary
                 </p>
               )}
             </NavLink>

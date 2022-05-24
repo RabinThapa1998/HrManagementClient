@@ -2,6 +2,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { useQuery, useMutation } from "react-query";
+import { request } from "../../utils/axios-utils";
 
 const AddNewEmployeePage = () => {
   const [newdata, setNewdata] = useState({
@@ -17,37 +19,38 @@ const AddNewEmployeePage = () => {
     citizenship: "",
     image: "",
   });
-  const [btnStatus, setBtnStatus] = useState(false);
 
-  const URL = import.meta.env.VITE_URL;
-  const axiosFetchInstance = axios.create({
-    baseURL: URL,
-    headers: {
-      Authorization: "Bearer " + Cookies.get("token"),
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const postData = async (formData) => {
+    return request({
+      url: "/admins/employees",
+      method: "post",
+      data: formData,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBtnStatus(true);
-    var formData = new FormData();
+    var fd = new FormData();
     Object.entries(newdata).forEach(([key, value]) => {
-      formData.append(key, value);
+      fd.append(key, value);
     });
-
-    axiosFetchInstance
-      .post(`/admins/employees`, formData)
-      .then((res) => {
-        console.log(res.data);
-        alert("Added Successfully");
-        setBtnStatus(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Error on Adding ,Retry!!");
-        setBtnStatus(false);
-      });
+    mutate(fd);
   };
+  const { mutate, isLoading, isError } = useMutation(postData, {
+    onSuccess: (successData) => {
+      if (successData.message) {
+        return alert("Error Please Try Again!");
+      }
+      return alert(JSON.stringify("Successfully Added!"));
+    },
+  });
+
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
+  if (isError) {
+    return <p>Error. Please refresh</p>;
+  }
   return (
     <div className="w-full px-10 py-5 relative">
       <h2 className="text-2xl font-semibold text-sidebar absolute top-5">
@@ -228,7 +231,6 @@ const AddNewEmployeePage = () => {
               className="border border-green-500 rounded px-8 py-2 text-xl text-black  shadow-sm hover:shadow-xl hover:bg-green-500 hover:text-white disabled:bg-gray-300 disabled:border-gray-200 disabled:cursor-wait"
               type="submit"
               onClick={(e) => handleSubmit(e)}
-              disabled={btnStatus}
             >
               Add
             </button>

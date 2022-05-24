@@ -4,25 +4,21 @@ import EmployeeListCard from "../../components/admindashboard/EmployeeListCard";
 import EmployeeSummaryCard from "../../components/admindashboard/EmployeeSummaryCard";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { useQuery } from "react-query";
+import { request } from "../../utils/axios-utils";
 
 const AdminDashboard = () => {
-  const [allEmployeeDetails, setAllEmployeeDetails] = useState("");
-  const URL = import.meta.env.VITE_URL;
   // const tokenReceived = useSelector((state) => state.auth.token);
-  const tokenReceived = Cookies.get("token");
 
-  const axiosFetchInstance = axios.create({
-    baseURL: URL,
-    headers: { Authorization: "Bearer " + tokenReceived },
-  });
-  useEffect(() => {
-    axiosFetchInstance
-      .get(`/admins/employees`)
-      .then((res) => setAllEmployeeDetails(res.data.data))
-      .catch((err) => console.log(err));
-  }, []);
+  const { isLoading, data, isError, error } = useQuery("Admin-Dashboard", () =>
+    request({ url: "/admins/employees", method: "get" })
+  );
 
-  if (!allEmployeeDetails) {
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
+  if (isError) {
     return <div>loading...</div>;
   }
 
@@ -32,7 +28,7 @@ const AdminDashboard = () => {
         Admin Dashboard
       </h2>
       <EmployeeSummaryCard />
-      <EmployeeListCard allEmployeeDetails={allEmployeeDetails} />
+      <EmployeeListCard allEmployeeDetails={data?.data.data} />
     </div>
   );
 };
