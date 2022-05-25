@@ -159,6 +159,28 @@ const Sidebar = () => {
                 </p>
               )}
             </NavLink>
+            <NavLink
+              to="/events"
+              className={` ${
+                shrink
+                  ? "justify-between flex items-center hover:bg-hover py-3 pl-0 rounded-md my-2"
+                  : "justify-start flex items-center hover:bg-hover py-3 pl-2 rounded-md my-2"
+              }`}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              <img
+                src="/event-icon.png"
+                alt=""
+                className={` ${
+                  shrink ? "h-8  w-8 m-auto block" : "h-6 w-6 block"
+                }"`}
+              />
+              {!shrink && (
+                <p className={`${shrink ? "ml-0 text-lg" : "ml-3 text-lg"}`}>
+                  Events
+                </p>
+              )}
+            </NavLink>
           </>
         )}
       </div>

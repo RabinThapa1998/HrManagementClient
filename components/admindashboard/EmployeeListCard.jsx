@@ -31,7 +31,7 @@ export const IndividualEmployeeCard = ({ employee }) => {
   return (
     <div className="shadow bg-white rounded-md flex flex-col py-6 px-2 items-center relative border">
       <div className="h-24 w-24 rounded-full object-cover overflow-hidden ">
-        <img src="/pp.jpg" alt="profilepicture" className="" />
+        <img src={employee?.image||"/pp.jpg"} alt="profilepicture" className="" />
       </div>
       <p className="text-xl font-semibold text-sidebar pt-3">
         {employee.firstName} {employee.lastName}

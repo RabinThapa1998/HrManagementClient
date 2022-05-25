@@ -31,6 +31,7 @@ const EmployeeDetailsPage = React.lazy(() =>
 const Login = React.lazy(() => import("./pages/Login"));
 const UserProfilePage = React.lazy(() => import("./pages/UserProfilePage"));
 const SalaryListPage = React.lazy(() => import("./pages/SalaryListPage"));
+const EventsPage = React.lazy(() => import("./pages/EventsPage"));
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,8 @@ function App() {
                           element={<EmployeeDetailsPage />}
                         />
                         <Route path="salarylist" element={<SalaryListPage />} />
+                        <Route path="events" element={<EventsPage />} />
+
                       </Route>
                     </>
                   )}
